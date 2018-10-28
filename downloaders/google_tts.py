@@ -10,7 +10,7 @@
 Download pronunciations from GoogleTTS
 """
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from .downloader import AudioDownloader
 
@@ -25,10 +25,10 @@ so skip this by default.
 
 
 class GooglettsDownloader(AudioDownloader):
-    u"""Class to get pronunciations from Google’s TTS service."""
+    """Class to get pronunciations from Google’s TTS service."""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.icon_url = 'http://translate.google.com/'
         self.url = 'http://translate.google.com/translate_tts?'
 
@@ -56,6 +56,6 @@ class GooglettsDownloader(AudioDownloader):
             (word_path, word_file_name, dict(Source='GoogleTTS')))
 
     def build_url(self, source):
-        u"""Return a string that can be used as the url."""
+        """Return a string that can be used as the url."""
         qdict = dict(tl=self.language, q=source.encode('utf-8'))
-        return self.url + urllib.urlencode(qdict)
+        return self.url + urllib.parse.urlencode(qdict)

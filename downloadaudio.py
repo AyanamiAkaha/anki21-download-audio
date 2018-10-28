@@ -17,7 +17,7 @@ Japanese audio from Japanesepod.
 
 
 # Flake8 complains, but that is OK. We need the imports here. RAS 2012-10-17
-import downloadaudio.conflanguage
-import downloadaudio.download
-import downloadaudio.model
-from downloadaudio import __version__
+from . import downloadaudio.conflanguage
+from . import downloadaudio.download
+from . import downloadaudio.model
+from .downloadaudio import __version__

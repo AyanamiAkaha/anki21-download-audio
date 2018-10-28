@@ -10,8 +10,8 @@
 Download pronunciations from Wiktionary.
 '''
 
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import re
 
 from .downloader import AudioDownloader, uniqify_list
@@ -29,7 +29,7 @@ class WiktionaryDownloader(AudioDownloader):
     """Download audio from Wiktionary"""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.ogg'
+        self.file_extension = '.ogg'
         self.icon_url = 'http://de.wiktionary.org/'
         self.full_icon_url = 'http://bits.wikimedia.org/favicon/piece.ico'
         self.url = 'http://{0}.wiktionary.org/wiki/{1}'
@@ -38,7 +38,7 @@ class WiktionaryDownloader(AudioDownloader):
         # in the style <hex_digit_1>/<hex_digit_1><hex_digit_2>. Look
         # for that pattern.
         self.word_ogg_re = \
-            ur'/([a-f0-9])/\1[a-f0-9]/[^/]*\b{word}\b[^/]*\.ogg$'
+            r'/([a-f0-9])/\1[a-f0-9]/[^/]*\b{word}\b[^/]*\.ogg$'
         # This seems to work to extract the url from a <button> tag's
         # onclick attribute.
         self.button_onclick_re = '"videoUrl":"([^"]+)"'
@@ -54,7 +54,7 @@ class WiktionaryDownloader(AudioDownloader):
         self.set_names(word, base, ruby)
         if not word:
             return
-        u_word = urllib.quote(word.encode('utf-8'))
+        u_word = urllib.parse.quote(word.encode('utf-8'))
         self.maybe_get_icon()
         self.language = self.language[:2]
         word_soup = self.get_soup_from_url(
@@ -105,7 +105,7 @@ class WiktionaryDownloader(AudioDownloader):
         for url_to_get in ogg_url_list:
             # We may have to add a scheme or a scheme and host
             # name (netloc). urlparse to the rescue!
-            word_url = urlparse.urljoin(
+            word_url = urllib.parse.urljoin(
                 self.url.format(self.language, ''), url_to_get)
             try:
                 word_data = self.get_data_from_url(word_url)

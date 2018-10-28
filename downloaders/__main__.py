@@ -4,7 +4,7 @@
 # Copyright © 2012 Roland Sieker, <ospalh@gmail.com>
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
 
-u"""
+"""
 Functions to use the downloader classes stand-alone.
 """
 
@@ -20,6 +20,6 @@ def move_here(dl):
 
 jpd = JapanesepodDownloader()
 jpd.language = 'ja'
-print u'Test: downloading 今度 こんど from Japanesepod'
-jpd.download_files('', u'今度', u'こんど')
-print jpd.downloads_list[0]
+print('Test: downloading 今度 こんど from Japanesepod')
+jpd.download_files('', '今度', 'こんど')
+print(jpd.downloads_list[0])

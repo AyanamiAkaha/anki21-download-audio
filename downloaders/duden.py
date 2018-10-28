@@ -12,18 +12,18 @@ Download pronunciations from Duden.
 
 import re
 import unicodedata
-import urlparse
+import urllib.parse
 
 from .downloader import AudioDownloader
 
-transliterations = [(u'Ä', 'Ae'), (u'Ö', 'Oe'), (u'Ü', 'Ue'), (u'ä', 'ae'),
-                    (u'ö', 'oe'), (u'ü', 'ue'), (u'ß', 'sz')]
+transliterations = [('Ä', 'Ae'), ('Ö', 'Oe'), ('Ü', 'Ue'), ('ä', 'ae'),
+                    ('ö', 'oe'), ('ü', 'ue'), ('ß', 'sz')]
 """List of transliterations needed to get the correct url."""
 title_key = 'Als mp3 abspielen'
 
 
 def munge_word(word):
-    u"""
+    """
     Munge the word so that it matches the URL used by duden.de.
 
     Replace umlauts by the Xe transcription, ß wit sz [sic], drop
@@ -42,7 +42,7 @@ class DudenDownloader(AudioDownloader):
     """Download audio from Duden"""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.icon_url = 'http://www.duden.de/'
         self.url = 'http://www.duden.de/rechtschreibung/'
 
@@ -71,7 +71,7 @@ class DudenDownloader(AudioDownloader):
             if self.good_link(link):
                 extras = dict(Source="Duden")
                 try:
-                    extras[u'©'] = re.search(u'© (.*)', link['title']).group(1)
+                    extras['©'] = re.search('© (.*)', link['title']).group(1)
                 except AttributeError:
                     # 'NoneType' object has no attribute 'group' ...
                     pass
@@ -86,5 +86,5 @@ class DudenDownloader(AudioDownloader):
         """Check if link looks """
         if not title_key in link['title']:
             return False
-        return urlparse.urlsplit(link['href']).netloc \
-            == urlparse.urlsplit(self.url).netloc
+        return urllib.parse.urlsplit(link['href']).netloc \
+            == urllib.parse.urlsplit(self.url).netloc

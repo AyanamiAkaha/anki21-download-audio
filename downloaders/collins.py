@@ -10,7 +10,7 @@
 Download pronunciations from Merriam-Webster.
 """
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from .downloader import AudioDownloader, uniqify_list
 
@@ -22,16 +22,16 @@ class CollinsDownloader(AudioDownloader):
         # self.url = 'http://www.collinsdictionary.com/dictionary/NN-english/'
         # The url is set in the derived French or Spanish classes.
         self.url = None
-        self.base_url = u'http://www.collinsdictionary.com'
+        self.base_url = 'http://www.collinsdictionary.com'
         self.lang = None  # e.g. u'fr'
         self.lang_code = None  # e.g. u'/fr_/'
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         # self.icon_url = self.url
         # self.extras = dict(Source="Collins German")
         # Here the word page url works to get the favicon.
 
     def download_files(self, word, base, ruby, split):
-        u"""
+        """
         Get pronunciations of a word from a Collins dictionary.
 
         Look up a word at collins.com. There are a few derived classes
@@ -49,7 +49,7 @@ class CollinsDownloader(AudioDownloader):
         lword = word.lower()
         # Do our parsing with BeautifulSoup
         word_soup = self.get_soup_from_url(
-            self.url + urllib.quote(lword.encode('utf-8')))
+            self.url + urllib.parse.quote(lword.encode('utf-8')))
         # The audio clips are stored as img tags with class sound
         word_audio_img = word_soup.findAll(
             name='img', attrs={'class': 'sound'})

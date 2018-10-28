@@ -12,7 +12,7 @@ Download pronunciations from  Macmillan Dictionary.
 
 from copy import copy
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from .downloader import AudioDownloader
 
@@ -24,7 +24,7 @@ class MacmillanDownloader(AudioDownloader):
     """Download audio from Macmillan Dictionary."""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.icon_url = 'http://www.macmillandictionary.com/'
         self.extras = {}  # Set in the derived classes.
 
@@ -49,7 +49,7 @@ class MacmillanDownloader(AudioDownloader):
         self.maybe_get_icon()
         # Do our parsing with BeautifulSoup
         word_soup = self.get_soup_from_url(
-            self.url + urllib.quote(word.encode('utf-8')))
+            self.url + urllib.parse.quote(word.encode('utf-8')))
         # The audio clips are stored as images with class sound and
         # the link hidden in the onclick bit.
         sounds = word_soup.findAll(True, {'class': sound_class})

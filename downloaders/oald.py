@@ -13,7 +13,7 @@ Download pronunciations from  Oxford Advanced Learner’s Dictionary.
 
 from copy import copy
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from .downloader import AudioDownloader
 
@@ -26,13 +26,13 @@ class OaldDownloader(AudioDownloader):
     """Download audio from Oxford Advanced Learner’s Dictionary."""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.icon_url = 'http://www.oxfordlearnersdictionaries.com/'
         self.url = \
             'http://www.oxfordlearnersdictionaries.com/definition/english/'
         self.url_sound = self.icon_url
         self.extras = dict(
-            Source=u"Oxford Advanced Learner’s Dictionary")
+            Source="Oxford Advanced Learner’s Dictionary")
 
     def download_files(self, word, base, ruby, split):
         """
@@ -51,7 +51,7 @@ class OaldDownloader(AudioDownloader):
         self.maybe_get_icon()
         # Do our parsing with BeautifulSoup
         word_soup = self.get_soup_from_url(
-            self.url + urllib.quote(word.encode('utf-8')))
+            self.url + urllib.parse.quote(word.encode('utf-8')))
         self.ws = word_soup
         # The audio clips are stored as images with class sound and
         # the link hidden in the onclick bit.

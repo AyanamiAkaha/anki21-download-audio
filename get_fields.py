@@ -20,16 +20,16 @@ from anki.sound import stripSounds
 ## versions of the field names. When these lists contain upper-case
 ## letters, no field will ever be matched and nothing will be
 ## downloaded.
-expression_fields = [u'expression', u'word']
-u"""
+expression_fields = ['expression', 'word']
+"""
 Fields we get the ‘normal’ download text from.
 
 Text from these fields is used by most downloaders. When no field is
 found here, we use the first field.
 """
 
-reading_keys = ['reading', 'kana', u'かな', u'仮名']
-u"""
+reading_keys = ['reading', 'kana', 'かな', '仮名']
+"""
 Fields we get our Japanese text from.
 
 For Japanesepod we use these fields as source. A ‘Reading’ field is
@@ -43,7 +43,7 @@ audio_field_keys = ['audio', 'sound']
 
 # Replace ‘True’ with ‘False’ when you don't have kanji in your reading field.
 meaning_in_reading_field = True
-u"""
+"""
 Use either kanji and reading from one field (True) or from two fields (False).
 """
 
@@ -52,13 +52,13 @@ Use either kanji and reading from one field (True) or from two fields (False).
 # kanji. Make it easier to switch removing them for the downloads on
 # or off
 strip_interpunct = False
-u"""
+"""
 Do or do not remove katakana interpuncts 「・」 before sending requests.
 """
 # strip_interpunct = True
 
 # Change this at your own risk.
-field_name_re = ur'{{(?:[/^#]|[^:}]+:|)([^:}{]*%s[^:}{]*)}}'
+field_name_re = r'{{(?:[/^#]|[^:}]+:|)([^:}{]*%s[^:}{]*)}}'
 
 
 def uniqify_list(seq):
@@ -70,7 +70,7 @@ def uniqify_list(seq):
 
 
 def field_data(note, fname, readings, get_empty=False):
-    u"""
+    """
     Return a suitable source field name and the text in that field.
 
     Look for a suitable field to get the source text from and return it.
@@ -105,14 +105,14 @@ def field_data(note, fname, readings, get_empty=False):
         """
         text = note[field_names[idx]]
         # This is taken from aqt/browser.py.
-        text = text.replace(u'<br>', u' ')
-        text = text.replace(u'<br />', u' ')
+        text = text.replace('<br>', ' ')
+        text = text.replace('<br />', ' ')
         if strip_interpunct:
-            text = text.replace(u'・', u'')
+            text = text.replace('・', '')
         text = stripHTML(text)
         text = stripSounds(text)
         # Reformat so we have exactly one space between words.
-        text = u' '.join(text.split())
+        text = ' '.join(text.split())
         if not text and not get_empty:
             raise ValueError('Source field empty')
         # We pass the reading/plain on to the update dialog. We don't
@@ -124,7 +124,7 @@ def field_data(note, fname, readings, get_empty=False):
         return field_names[idx], fname, text, base, ruby, readings
 
     t_name = fname.lower()
-    field_names = [item[0] for item in note.items()]
+    field_names = [item[0] for item in list(note.items())]
     f_names = [fn.lower() for fn in field_names]
     # First, look for just audio fields
     for afk in audio_field_keys:
@@ -167,7 +167,7 @@ def field_data(note, fname, readings, get_empty=False):
             # While a bit tricky, this is not THAT hard to do. (Not
             # lookbehind needed.)
             sources_list = [
-                re.sub(ur'[\s_]{0}|{0}[\s_]?'.format(re.escape(afk)),
+                re.sub(r'[\s_]{0}|{0}[\s_]?'.format(re.escape(afk)),
                        '', t_name, count=1)]
         for cnd in sources_list:
             for idx, lname in enumerate(f_names):
@@ -189,9 +189,9 @@ def get_side_fields(card, note):
     fields and suitable data source fields.
     """
     if 'question' == mw.reviewer.state:
-        template = card.template()[u'qfmt']
+        template = card.template()['qfmt']
     else:
-        template = card.template()[u'afmt']
+        template = card.template()['afmt']
     audio_field_name_list = []
     for afk in audio_field_keys:
         # Append all fields in the current template/side that contain
@@ -199,7 +199,7 @@ def get_side_fields(card, note):
         audio_field_name_list += re.findall(field_name_re % (re.escape(afk), ),
                                             template, flags=re.IGNORECASE)
     audio_field_name_list = uniqify_list(audio_field_name_list)
-    all_field_names = [item[0] for item in note.items()]
+    all_field_names = [item[0] for item in list(note.items())]
     # Filter out non-existing fields.
     audio_field_name_list = [fn for fn in audio_field_name_list
                              if fn in all_field_names]
@@ -229,7 +229,7 @@ def get_note_fields(note, get_empty=False):
     Check all field names and return source and destination fields for
     downloading audio.
     """
-    field_names = [item[0] for item in note.items()]
+    field_names = [item[0] for item in list(note.items())]
     field_data_list = []
     for afk in audio_field_keys:
         for fn in field_names:

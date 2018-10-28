@@ -11,7 +11,7 @@
 Download Japanese pronunciations from Japanesepod
 '''
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from .downloader import AudioDownloader
 
@@ -20,7 +20,7 @@ class JapanesepodDownloader(AudioDownloader):
     """Download audio from Japanesepod"""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.user_agent = '''Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:15.0) \
 Gecko/20100101 Firefox/15.0.1'''
         self.icon_url = 'http://www.japanesepod101.com/'
@@ -64,12 +64,12 @@ Gecko/20100101 Firefox/15.0.1'''
 
 
     def query_url(self, kanji, kana):
-        u"""Return a string that can be used as the url."""
+        """Return a string that can be used as the url."""
         qdict = {}
         qdict['kanji'] = kanji.encode('utf-8')
         if kana:
             qdict['kana'] = kana.encode('utf-8')
-        return self.url + urllib.urlencode(qdict)
+        return self.url + urllib.parse.urlencode(qdict)
 
     def set_names(self, dummy_text, base, ruby):
         """
@@ -78,5 +78,5 @@ Gecko/20100101 Firefox/15.0.1'''
         self.base_name = base
         self.display_text = base
         if ruby:
-            self.base_name += u'_' + ruby
-            self.display_text += u' (' + ruby + u')'
+            self.base_name += '_' + ruby
+            self.display_text += ' (' + ruby + ')'

@@ -5,7 +5,7 @@
 # License: GNU AGPL, version 3 or later;
 # http://www.gnu.org/copyleft/agpl.html
 
-u"""
+"""
 Two classes to deal with audio files.
 
 One just moves files and isn’t used. The other does simple audio

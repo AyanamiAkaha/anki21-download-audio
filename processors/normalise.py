@@ -3,7 +3,7 @@
 # Copyright © 2012 Roland Sieker, <ospalh@gmail.com>
 # License: GNU AGPL, version 3 or later; http://www.gnu.org/copyleft/agpl.html
 
-u"""
+"""
 Move and normalise audio files.
 """
 
@@ -16,7 +16,7 @@ from .audio_processor import AudioProcessor
 
 
 class AudioNormaliser(AudioProcessor):
-    u"""
+    """
     Class that moves and normalises audio files.
     """
     def __init__(self):

@@ -13,7 +13,7 @@ Download pronunciations from leo.org
 
 import os
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 # Make this work without PyQt
 with_pyqt = True
@@ -29,7 +29,7 @@ class LeoDownloader(AudioDownloader):
     """Download audio from LEO"""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.url = 'http://www.leo.org/dict/audio_{language}/{word}.mp3'
         # And, yes, they use ch for Chinese.
         # (I'm not sure if they really have anything for ru or it.)
@@ -91,7 +91,7 @@ class LeoDownloader(AudioDownloader):
         if self.chinese_code == self.language:
             word = self.fix_pinyin(ruby)
         return self.url.format(
-            language=self.language, word=urllib.quote(word.encode(
+            language=self.language, word=urllib.parse.quote(word.encode(
                     self.site_file_name_encoding)))
 
     def fix_pinyin(self, pinyin):
@@ -156,8 +156,8 @@ class LeoDownloader(AudioDownloader):
         if self.language == self.chinese_code:
             if not ruby:
                 raise ValueError('Nothing to download')
-            self.base_name = u"{0}_{1}".format(base, ruby)
-            self.display_text = u"{1} ({0})".format(base, ruby)
+            self.base_name = "{0}_{1}".format(base, ruby)
+            self.display_text = "{1} ({0})".format(base, ruby)
         else:
             if not text:
                 raise ValueError('Nothing to download')

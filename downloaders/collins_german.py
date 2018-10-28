@@ -20,7 +20,7 @@ class CollinsGermanDownloader(CollinsDownloader):
         self.url \
             = 'http://www.collinsdictionary.com/dictionary/german-english/'
         self.lang = 'de'
-        self.lang_code = u'/de_/'
+        self.lang_code = '/de_/'
         self.icon_url = self.url
         self.extras = dict(Source="Collins German")
 

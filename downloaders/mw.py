@@ -10,7 +10,7 @@
 Download pronunciations from Merriam-Webster.
 """
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 
 from .downloader import AudioDownloader
@@ -39,7 +39,7 @@ class MerriamWebsterDownloader(AudioDownloader):
         self.popup_url = 'http://www.merriam-webster.com/audio.php?'
 
     def download_files(self, word, base, ruby, split):
-        ur"""
+        r"""
         Get pronunciations of a word from Meriam-Webster
 
         Look up a English word at merriam-webster.com, look for
@@ -59,7 +59,7 @@ class MerriamWebsterDownloader(AudioDownloader):
             return
         # Do our parsing with BeautifulSoup
         word_soup = self.get_soup_from_url(
-            self.url + urllib.quote(word.encode('utf-8')))
+            self.url + urllib.parse.quote(word.encode('utf-8')))
         # The audio clips are stored as input tags with class au
         word_input_aus = word_soup.findAll(name='input', attrs={'class': 'au'})
         # The interesting bit it the onclick attribute and looks like
@@ -145,4 +145,4 @@ class MerriamWebsterDownloader(AudioDownloader):
     def get_popup_url(self, base_name, source):
         """Build url for the MW play audio pop-up."""
         qdict = dict(file=base_name, word=source)
-        return self.popup_url + urllib.urlencode(qdict)
+        return self.popup_url + urllib.parse.urlencode(qdict)

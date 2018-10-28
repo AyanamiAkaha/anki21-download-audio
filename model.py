@@ -7,7 +7,7 @@
 # http://www.gnu.org/copyleft/agpl.html
 #
 
-u"""
+"""
 Standard models that work reasonably well with the add-on.
 """
 
@@ -95,7 +95,7 @@ def add_japanese_model(col):
     fm = mm.newField(_("Audio"))
     mm.addField(m, fm)
     # css
-    m['css'] += u"""\
+    m['css'] += """\
 .jp { font-size: 30px }
 .win .jp { font-family: "MS Mincho", "ＭＳ 明朝"; }
 .mac .jp { font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro"; }

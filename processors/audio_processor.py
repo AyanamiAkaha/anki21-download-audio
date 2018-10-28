@@ -14,7 +14,7 @@ from ..exists import free_media_name
 
 
 class AudioProcessor(object):
-    u"""Class to do audio processing."""
+    """Class to do audio processing."""
     def __init__(self):
         """
         Keep track if there is a point in using this at all.
@@ -43,7 +43,7 @@ class AudioProcessor(object):
         raise NotImplementedError("Use a class derived from this.")
 
     def unmunge_to_mediafile(self, in_name, base_name, suffix):
-        u"""
+        """
         Move the data to the media folder.
 
         Determine a free media name and move the data there from the

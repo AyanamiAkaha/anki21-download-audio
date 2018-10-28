@@ -37,7 +37,7 @@ fl_code_code = 'addon_audio_download_language'
 
 
 def elect_language(note):
-    u"""
+    """
     Return the most popular foreign language of a note.
 
     Go through the cards of the note and return the language most of
@@ -64,7 +64,7 @@ def elect_language(note):
     return votes.most_common(1)[0][0]
 
 def language_code_from_tags(note):
-    u"""Get the language set by the user for individual notes."""
+    """Get the language set by the user for individual notes."""
     for tag in note.tags:
         try:
             return re.search('^lang_([a-z]{2,3})$', tag,
@@ -75,7 +75,7 @@ def language_code_from_tags(note):
 
 
 def language_code_from_editor(note, card_edit):
-    u"""
+    """
     Return a language code.
 
     When the note has a lang_NN tag use that.

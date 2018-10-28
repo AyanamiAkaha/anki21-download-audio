@@ -13,15 +13,15 @@ Download pronunciations from Lexin.
 
 import unicodedata
 
-download_file_extension = u'.mp3'
+download_file_extension = '.mp3'
 
 
 from .downloader import AudioDownloader
 
 transliterations = [
-    (u'å', '0345'), (u'ä', '0344'), (u'ö', '0366'), (u'é', '0351'),
-    (u'ü', '0374'), (u'Å', '0305'), (u'Ä', '0304'), (u'Ö', '0326'),
-    (u'É', '0311'), (u'Ü', '0334')]
+    ('å', '0345'), ('ä', '0344'), ('ö', '0366'), ('é', '0351'),
+    ('ü', '0374'), ('Å', '0305'), ('Ä', '0304'), ('Ö', '0326'),
+    ('É', '0311'), ('Ü', '0334')]
 # List of transliterations needed to get the correct url.
 
 
@@ -46,7 +46,7 @@ class LexinDownloader(AudioDownloader):
     """Download audio from Lexin"""
     def __init__(self):
         AudioDownloader.__init__(self)
-        self.file_extension = u'.mp3'
+        self.file_extension = '.mp3'
         self.icon_url = 'http://lexin.nada.kth.se/lexin/'
         self.url = 'http://lexin.nada.kth.se/sound/'
 
