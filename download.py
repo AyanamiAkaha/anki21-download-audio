@@ -50,6 +50,7 @@ from .processors import processor
 from .review_gui import store_or_blacklist
 from .update_gui import update_data
 
+DEBUG = 1
 
 icons_dir = os.path.join(mw.pm.addonFolder(), 'downloadaudio', 'icons')
 """Place were we keep our megaphone icon.."""
@@ -84,7 +85,8 @@ def do_download(note, field_data, language, hide_text=False):
                 ## Uncomment this raise while testing a new
                 ## downloaders.  Also comment out all the others in the
                 ## downloaders list in downloaders.__init__
-                # raise
+                if DEBUG:
+                    raise
                 continue
             show_skull_and_bones = \
                 show_skull_and_bones or dloader.show_skull_and_bones
@@ -107,7 +109,8 @@ def do_download(note, field_data, language, hide_text=False):
                         file_name = processor.process_and_move(
                             word_path, dloader.base_name)
                     except:
-                        # raise  # Use this to debug an audio processor.
+                        if DEBUG:
+                            raise  # Use this to debug an audio processor.
                         os.remove(word_path)
                         continue
                 # else:

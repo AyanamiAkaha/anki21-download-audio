@@ -14,7 +14,10 @@ import tempfile
 import urllib.request, urllib.parse, urllib.error
 import urllib.request, urllib.error, urllib.parse
 import urllib.parse
-from BeautifulSoup import BeautifulSoup as soup
+from bs4 import BeautifulSoup as soup
+from aqt.utils import showInfo
+
+DEBUG = None
 
 # Make this work without PyQt
 with_pyqt = True
@@ -166,7 +169,7 @@ class AudioDownloader(object):
         if 200 != page_response.code:
             self.get_favicon()
             return
-        page_soup = soup(page_response)
+        page_soup = soup(page_response, "html.parser")
         try:
             icon_url = page_soup.find(
                 name='link', attrs={'rel': 'icon'})['href']
@@ -234,12 +237,14 @@ class AudioDownloader(object):
             # 32-bit encoding (UTF-32?). Avoid that. (The whole things
             # is a bit curious, but there shouldn't really be any harm
             # in this.)
-            request = urllib.request.Request(url_in.encode('ascii'))
+            if DEBUG:
+                showInfo(url_in)
+            request = urllib.request.Request(url_in.encode('utf-8'))
         except UnicodeDecodeError:
             request = urllib.request.Request(url_in)
         try:
             # dto. But i guess this is even less necessary.
-            request.add_header('User-agent', self.user_agent.encode('ascii'))
+            request.add_header('User-agent', self.user_agent.encode('utf-8'))
         except UnicodeDecodeError:
             request.add_header('User-agent', self.user_agent)
         response = urllib.request.urlopen(request)
@@ -253,7 +258,7 @@ class AudioDownloader(object):
 
         Wrapper helper function aronud self.get_data_from_url()
         """
-        return soup(self.get_data_from_url(url_in))
+        return soup(self.get_data_from_url(url_in), "html.parser")
 
     def get_file_name(self):
         """
