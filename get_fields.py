@@ -10,9 +10,39 @@ Extract field data to download.
 
 import re
 from aqt import mw
-from anki.template import furigana
 from anki.utils import stripHTML
 from anki.sound import stripSounds
+
+FURIGANA_RE = r" ?([^ >]+?)\[(.+?)\]"
+RUBY_REPL = r"<ruby><rb>\1</rb><rt>\2</rt></ruby>"
+
+
+def replace_if_not_audio(repl):
+    def func(match):
+        if match.group(2).startswith("sound:"):
+            # return without modification
+            return match.group(0)
+        else:
+            return re.sub(FURIGANA_RE, repl, match.group(0))
+
+    return func
+
+def without_nbsp(s):
+    return s.replace("&nbsp;", " ")
+
+def kanji_filter(txt, *args):
+    return re.sub(FURIGANA_RE, replace_if_not_audio(r"\1"),
+    without_nbsp(txt))
+
+
+def kana_filter(txt, *args):
+    return re.sub(FURIGANA_RE, replace_if_not_audio(r"\2"),
+    without_nbsp(txt))
+
+
+def furigana_filter(txt, *args):
+    return re.sub(FURIGANA_RE, replace_if_not_audio(RUBY_REPL),
+    without_nbsp(txt))
 
 
 ## Change these to mach the field names of your decks. Make sure to
@@ -119,8 +149,8 @@ def field_data(note, fname, readings, get_empty=False):
         # look at the texts any more to decide what to do. So don't
         # set anything to empty here. Rather do the split even if it
         # is pointless.
-        base = furigana.kanji(text)
-        ruby = furigana.kana(text)
+        base = kanji_filter(text)
+        ruby = kana_filter(text)
         return field_names[idx], fname, text, base, ruby, readings
 
     t_name = fname.lower()

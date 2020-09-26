@@ -179,13 +179,18 @@ class AudioDownloader(object):
         # The url may be absolute or relative.
         if not urllib.parse.urlsplit(icon_url).netloc:
             icon_url = urllib.parse.urljoin(
-                self.url, urllib.parse.quote(icon_url.encode('utf-8')))
-        icon_request = urllib.request.Request(icon_url)
-        if self.user_agent:
-            icon_request.add_header('User-agent', self.user_agent)
-        icon_response = urllib.request.urlopen(icon_request)
-        if 200 != icon_response.code:
-            self.site_icon = None
+                self.url, urllib.parse.quote(icon_url))
+        try:
+            icon_request = urllib.request.Request(icon_url)
+            if self.user_agent:
+                icon_request.add_header('User-agent', self.user_agent)
+            icon_response = urllib.request.urlopen(icon_request)
+            if 200 != icon_response.code:
+                self.site_icon = None
+                return
+        except urllib.error.URLError as ex:
+            if DEBUG:
+                showInfo("URL error for '%s': %s" % (icon_url, ex))
             return
         self.site_icon = QImage.fromData(icon_response.read())
         max_size = QSize(self.max_icon_size, self.max_icon_size)
@@ -232,21 +237,23 @@ class AudioDownloader(object):
         the requests, checks that we got error code 200 and returns
         the raw data only when everything is OK.
         """
-        try:
-            # There have been reports that the request was send in a
-            # 32-bit encoding (UTF-32?). Avoid that. (The whole things
-            # is a bit curious, but there shouldn't really be any harm
-            # in this.)
-            if DEBUG:
-                showInfo(url_in)
-            request = urllib.request.Request(url_in.encode('utf-8'))
-        except UnicodeDecodeError:
-            request = urllib.request.Request(url_in)
-        try:
-            # dto. But i guess this is even less necessary.
-            request.add_header('User-agent', self.user_agent.encode('utf-8'))
-        except UnicodeDecodeError:
-            request.add_header('User-agent', self.user_agent)
+        # try:
+        #     # There have been reports that the request was send in a
+        #     # 32-bit encoding (UTF-32?). Avoid that. (The whole things
+        #     # is a bit curious, but there shouldn't really be any harm
+        #     # in this.)
+        #     if DEBUG:
+        #         showInfo(url_in)
+        #     request = urllib.request.Request(url_in.encode('utf-8'))
+        # except UnicodeDecodeError:
+        #     request = urllib.request.Request(url_in)
+        # try:
+        #     # dto. But i guess this is even less necessary.
+        #     request.add_header('User-agent', self.user_agent.encode('utf-8'))
+        # except UnicodeDecodeError:
+        #     request.add_header('User-agent', self.user_agent)
+        request = urllib.request.Request(url_in)
+        request.add_header('User-agent', self.user_agent)
         response = urllib.request.urlopen(request)
         if 200 != response.code:
             raise ValueError(str(response.code) + ': ' + response.msg)

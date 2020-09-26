@@ -50,7 +50,7 @@ from .processors import processor
 from .review_gui import store_or_blacklist
 from .update_gui import update_data
 
-DEBUG = 1
+DEBUG = None
 
 icons_dir = os.path.join(mw.pm.addonFolder(), 'downloadaudio', 'icons')
 """Place were we keep our megaphone icon.."""
@@ -212,14 +212,14 @@ def editor_download_editing(self):
     self.stealFocus = False
 
 
-def editor_add_download_editing_button(self):
+def editor_add_download_editing_button(buttons, self):
     """Add the download button to the editor"""
+    self._links['download_audio'] = lambda self=self: editor_download_editing(self)
     dl_button = self._addButton(
+        os.path.join(icons_dir, 'download_note_audio.png'),
         "download_audio",
-        lambda self=self: editor_download_editing(self),
-        tip="Download audio...", text=" ")
-    dl_button.setIcon(
-        QIcon(os.path.join(icons_dir, 'download_note_audio.png')))
+        "Download audio...")
+    return buttons + [dl_button]
 
 
 # Either reuse an edit-media sub-menu created by another add-on
