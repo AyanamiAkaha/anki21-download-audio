@@ -8,8 +8,9 @@
 Change the download audio parameters on user input.
 """
 
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from aqt.qt import *
+#from PyQt5.QtGui import *
+#from PyQt5.QtWidgets import *
 
 from anki.lang import _
 

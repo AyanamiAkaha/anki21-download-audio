@@ -19,8 +19,9 @@ from .downloader import AudioDownloader, uniqify_list
 # Make this work without PyQt
 with_pyqt = True
 try:
-    from PyQt5.QtGui import QImage
-    from PyQt5.QtCore import QSize, Qt
+    from aqt.qt import QImage, QSize, Qt
+    #from PyQt5.QtGui import QImage
+    #from PyQt5.QtCore import QSize, Qt
 except ImportError:
     with_pyqt = False
 

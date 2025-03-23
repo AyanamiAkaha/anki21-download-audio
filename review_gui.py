@@ -20,8 +20,9 @@ choices what to do wit each:
 """
 
 import os
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from aqt.qt import *
+#from PyQt5.QtWidgets import *
+#from PyQt5.QtGui import *
 
 from aqt import mw
 from anki.lang import _

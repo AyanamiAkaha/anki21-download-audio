@@ -18,7 +18,8 @@ import urllib.request, urllib.parse, urllib.error
 # Make this work without PyQt
 with_pyqt = True
 try:
-    from PyQt5.QtGui import QImage
+    from aqt.qt import QImage
+    #from PyQt5.QtGui import QImage
 except ImportError:
     with_pyqt = False
 
