@@ -18,16 +18,16 @@ When PyQt4 is installed, this downolads the site icon (favicon) for
 each site first.
 """
 
-from .google_tts import GooglettsDownloader
-from .howjsay import HowJSayDownloader
+# from .google_tts import GooglettsDownloader
+# from .howjsay import HowJSayDownloader
 from .japanesepod import JapanesepodDownloader
-from .wiktionary import WiktionaryDownloader
+# from .wiktionary import WiktionaryDownloader
 
 downloaders = [
     JapanesepodDownloader(),
-    HowJSayDownloader(),
-    WiktionaryDownloader(),
-    GooglettsDownloader(),
+#    HowJSayDownloader(),
+#    WiktionaryDownloader(),
+#    GooglettsDownloader(),
 ]
 # This is the list of downloaders.
 #
