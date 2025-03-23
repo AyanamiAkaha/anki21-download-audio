@@ -130,7 +130,7 @@ def do_download(note, field_data, language, hide_text=False):
         # else: quietly drop out on user cancel
 
 
-def download_for_side():
+def download_for_side(checked=False):
     """
     Download audio for one side.
 
@@ -146,7 +146,7 @@ def download_for_side():
         note, field_data, language_code_from_card(card), hide_text=True)
 
 
-def download_for_note(ask_user=False, note=None, editor=None):
+def download_for_note(ask_user=False, note=None, editor=None, checked=False):
     """
     Download audio for all fields.
 
@@ -183,7 +183,7 @@ def download_for_note(ask_user=False, note=None, editor=None):
     do_download(note, field_data, language_code)
 
 
-def download_manual():
+def download_manual(checked=False):
     """Do the download with the dialog before we go."""
     download_for_note(ask_user=True)
 

@@ -49,7 +49,7 @@ def store_or_blacklist(note, retrieved_data, show_skull_and_bones, hide_text):
         raise ValueError('Nothing downloaded')
     review_files = ReviewFiles(
         note, retrieved_data, show_skull_and_bones, hide_text)
-    if not review_files.exec_():
+    if not review_files.exec():
         remove_all_files(retrieved_data)
         raise RuntimeError('User cancel')
     # Go through the list once and just do what needs to be done.
@@ -203,8 +203,8 @@ that they are sorry, will add this soon &c., click on this.""")
         layout.addWidget(rule_label, 2, 0, 1, self.num_columns)
         self.create_rows(layout)
         dialog_buttons = QDialogButtonBox(self)
-        dialog_buttons.addButton(QDialogButtonBox.Cancel)
-        dialog_buttons.addButton(QDialogButtonBox.Ok)
+        dialog_buttons.addButton(QDialogButtonBox.StandardButton.Cancel)
+        dialog_buttons.addButton(QDialogButtonBox.StandardButton.Ok)
         dialog_buttons.accepted.connect(self.accept)
         dialog_buttons.rejected.connect(self.reject)
         layout.addWidget(dialog_buttons,

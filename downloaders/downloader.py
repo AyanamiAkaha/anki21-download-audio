@@ -199,7 +199,7 @@ class AudioDownloader(object):
         if icon_size.width() > max_size.width() \
                 or icon_size.height() > max_size.height():
             self.site_icon = self.site_icon.scaled(
-                max_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                max_size, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
 
     def get_favicon(self):
         """
@@ -228,7 +228,7 @@ class AudioDownloader(object):
         if ico_size.width() > max_size.width() \
                 or ico_size.height() > max_size.height():
             self.site_icon = self.site_icon.scaled(
-                max_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                max_size, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
 
     def get_data_from_url(self, url_in):
         """

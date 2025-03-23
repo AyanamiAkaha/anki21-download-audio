@@ -135,4 +135,4 @@ class WiktionaryDownloader(AudioDownloader):
             if ico_size.width() > max_size.width() \
                     or ico_size.height() > max_size.height():
                 self.site_icon = self.site_icon.scaled(
-                    max_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                    max_size, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)

@@ -20,7 +20,7 @@ from .language import default_audio_language_code
 def update_data(data_fields, language_code):
     """Return updated download information"""
     review_fields = ReviewFields(data_fields, language_code)
-    if not review_fields.exec_():
+    if not review_fields.exec():
         raise RuntimeError('User cancel')
     for num, (source, dest, old_text, old_base, old_ruby, split_reading) \
             in enumerate(data_fields):
@@ -90,8 +90,8 @@ reading (ruby) on the right.</p>
         layout.addWidget(edit_text_head)
         self.create_data_rows(layout)
         line = QFrame(self)
-        line.setFrameShape(QFrame.HLine)
-        line.setFrameShadow(QFrame.Sunken)
+        line.setFrameShape(QFrame.Shape.HLine)
+        line.setFrameShadow(QFrame.Shadow.Sunken)
         layout.addWidget(line)
         lcode_head = QLabel(_('''<h4>Language code</h4>'''))
         layout.addWidget(lcode_head)
@@ -108,8 +108,8 @@ reading (ruby) on the right.</p>
         self.language_code_lineedit.setToolTip(language_help)
         layout.addLayout(lang_hlayout)
         dialog_buttons = QDialogButtonBox(self)
-        dialog_buttons.addButton(QDialogButtonBox.Cancel)
-        dialog_buttons.addButton(QDialogButtonBox.Ok)
+        dialog_buttons.addButton(QDialogButtonBox.StandardButton.Cancel)
+        dialog_buttons.addButton(QDialogButtonBox.StandardButton.Ok)
         dialog_buttons.accepted.connect(self.accept)
         dialog_buttons.rejected.connect(self.reject)
         layout.addWidget(dialog_buttons)
